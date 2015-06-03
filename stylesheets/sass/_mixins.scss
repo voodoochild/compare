@@ -1,0 +1,24 @@
+@mixin from-breakpoint($point) {
+    @if $point == large {
+        @media (min-width: 800 / 16 * 1em) { @content; }
+    }
+    @else if $point == medium {
+        @media (min-width: 700 / 16 * 1em) { @content; }
+    }
+    @else if $point == small {
+        @media (min-width: 600 / 16 * 1em) { @content; }
+    }
+}
+
+@mixin font-size($size, $line-height: $size) {
+    font-size: $size * 1px;
+    font-size: ($size / 10) * 1rem;
+    line-height: $line-height * 1px;
+    line-height: ($line-height / 10) * 1rem;
+}
+
+@mixin font($family, $weight, $size, $line-height: $size) {
+    font-family: $family;
+    font-weight: $weight;
+    @include font-size($size, $line-height);
+}

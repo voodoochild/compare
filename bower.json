@@ -1,0 +1,6 @@
+{
+  "name": "compare",
+  "devDependencies": {
+    "normalize-scss": "~3.0.2"
+  }
+}
