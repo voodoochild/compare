@@ -42,7 +42,7 @@ module.exports = function(grunt) {
     watch: {
       styles: {
         files: ['stylesheets/sass/**/*.scss'],
-        tasks: ['sass'],
+        tasks: ['sass', 'cssmin'],
         options: {
           livereload: true,
         }

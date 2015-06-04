@@ -8,5 +8,9 @@
     "grunt-contrib-cssmin": "^0.12.3",
     "grunt-contrib-sass": "latest",
     "grunt-contrib-watch": "latest"
+  },
+  "dependencies": {
+    "express": "^4.12.4",
+    "lodash": "^3.9.3"
   }
 }
