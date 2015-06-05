@@ -1,37 +1,12 @@
-/*
-<figure>
-<img class="screenshot" src="http://www.fillmurray.com/960/540" />
-<figcaption>1.0 Bill Murray</figcaption>
-</figure>
-
-<option>7b4c7b30ab0f06616636dcd05cbcb171cdf1a39b</option>
-
-1. Populate dropdowns
-2. Enable dropdowns
-3. Load HEAD and HEAD~1 by default
-4. Generate image diffs
-*/
-
 (function () {
     var VERSIONS_URL = 'http://localhost:3000/versions.json';
 
     var left = document.getElementById('left');
     var right = document.getElementById('right');
     var output = document.getElementById('output');
-    // var images = {
-    //     left: [
-    //         '/server/images/desktop.png',
-    //         '/server/images/mobile.png'
-    //     ],
-    //     right: [
-    //         '/server/images/desktop-2.png',
-    //         '/server/images/mobile-2.png'
-    //     ]
-    // };
     var versions = [];
     var images = {};
 
-    // @TODO should return a promise
     function getVersions () {
         return new Promise(function (resolve, reject) {
             var xmlhttp = new XMLHttpRequest();
@@ -83,6 +58,19 @@
         return f;
     }
 
+    function getCommit (side) {
+        var select = side.querySelector('select');
+        return select.options[select.selectedIndex].value;
+    }
+
+    // function updateState () {
+    //     var leftCommit = getCommit(left);
+    //     var rightCommit = getCommit(right);
+    //     var url = '/' + leftCommit + '/' + rightCommit;
+    //     var title = 'Compare: ' + leftCommit + ' -> ' + rightCommit;
+    //     history.replaceState({}, title, url);
+    // }
+
     function loadImages () {
         var side;
 
@@ -124,6 +112,8 @@
     }
 
     function makeDiff (a, b) {
+        if (!a || !b) return;
+
         var aa = imageWorkspace(a.src);
         var bb = imageWorkspace(b.src);
 
@@ -160,8 +150,13 @@
     }
 
     function bindEventHandlers () {
-        left.querySelector('select').addEventListener('change', loadImages);
-        right.querySelector('select').addEventListener('change', loadImages);
+        left.querySelector('select').addEventListener('change', handle.bind(this));
+        right.querySelector('select').addEventListener('change', handle.bind(this));
+
+        function handle () {
+            // updateState();
+            loadImages.call(this);
+        }
     }
 
     function init () {

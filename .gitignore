@@ -4,3 +4,5 @@ stylesheets/css
 components
 .sass-cache
 dist/
+nightwatch/output
+nightwatch/screenshots

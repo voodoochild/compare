@@ -52,12 +52,6 @@ main {
 .screenshot + figcaption {
     margin-top: 0;
 }
-select {
-    width: 90%;
-    &[disabled] {
-        width: 50%;
-    }
-}
 .workspace {
     display: none;
 }

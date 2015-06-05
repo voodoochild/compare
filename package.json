@@ -1,6 +1,15 @@
 {
   "name": "compare",
   "version": "0.1.0",
+  "description": "A visual regression tool",
+  "author": "Kriss Watt <kriss.watt@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/voodoochild/compare"
+  },
+  "bugs": {
+    "url": "https://github.com/voodoochild/compare/issues"
+  },
   "devDependencies": {
     "cheerio": "^0.19.0",
     "grunt": "latest",
@@ -11,6 +20,8 @@
   },
   "dependencies": {
     "express": "^4.12.4",
-    "lodash": "^3.9.3"
-  }
+    "lodash": "^3.9.3",
+    "nightwatch": "^0.6.13"
+  },
+  "private": true
 }

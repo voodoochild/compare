@@ -13,17 +13,36 @@ app.use(function (req, res, next) {
 app.get('/versions.json', function (req, res) {
     res.json([
         {
-            commit: '29701c1257fed233d7fc65a2d917be06a0aa303b',
+            commit: 'version',
             screenshots: [
-                '/server/images/29701c1257fed233d7fc65a2d917be06a0aa303b/desktop.png',
-                '/server/images/29701c1257fed233d7fc65a2d917be06a0aa303b/mobile.png'
+                '/server/images/version/x-large-screen.png',
+                '/server/images/version/large-screen.png',
+                '/server/images/version/medium-large-screen.png',
+                '/server/images/version/medium-screen.png',
+                '/server/images/version/small-screen.png',
+                '/server/images/version/x-small-screen.png'
             ]
         },
         {
-            commit: 'e058dbec0bfbd5c72301d54d3b5aa0779d897866',
+            commit: 'lololol',
             screenshots: [
-                '/server/images/e058dbec0bfbd5c72301d54d3b5aa0779d897866/desktop.png',
-                '/server/images/e058dbec0bfbd5c72301d54d3b5aa0779d897866/mobile.png'
+                '/server/images/lololol/x-large-screen.png',
+                '/server/images/lololol/large-screen.png',
+                '/server/images/lololol/medium-large-screen.png',
+                '/server/images/lololol/medium-screen.png',
+                '/server/images/lololol/small-screen.png',
+                '/server/images/lololol/x-small-screen.png'
+            ]
+        },
+        {
+            commit: '25198a7',
+            screenshots: [
+                '/server/images/25198a7/x-large-screen.png',
+                '/server/images/25198a7/large-screen.png',
+                '/server/images/25198a7/medium-large-screen.png',
+                '/server/images/25198a7/medium-screen.png',
+                '/server/images/25198a7/small-screen.png',
+                '/server/images/25198a7/x-small-screen.png'
             ]
         }
     ]);
