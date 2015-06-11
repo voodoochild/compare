@@ -6,3 +6,4 @@ components
 dist/
 nightwatch/output
 nightwatch/screenshots
+server/images

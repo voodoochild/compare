@@ -63,14 +63,6 @@
         return select.options[select.selectedIndex].value;
     }
 
-    // function updateState () {
-    //     var leftCommit = getCommit(left);
-    //     var rightCommit = getCommit(right);
-    //     var url = '/' + leftCommit + '/' + rightCommit;
-    //     var title = 'Compare: ' + leftCommit + ' -> ' + rightCommit;
-    //     history.replaceState({}, title, url);
-    // }
-
     function loadImages () {
         var side;
 
@@ -164,9 +156,8 @@
             populateVersions();
             bindEventHandlers();
 
-            // Set default commits, HEAD and HEAD~1
-            left.querySelector('select option:nth-child(2)').selected = 'selected';
-            right.querySelector('select option:first-child').selected = 'selected';
+            var child = left.querySelector('select option:nth-child(2)');
+            if (child) child.selected = 'selected';
 
             loadImages();
         });

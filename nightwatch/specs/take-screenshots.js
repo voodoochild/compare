@@ -1,6 +1,9 @@
+var path = require('path');
+
 module.exports = {
     waitTimeout: 30000,
     pauseTimeout: 1000,
+    version: 'latest',
 
     'Default views': function (browser) {
         browser
@@ -15,22 +18,22 @@ module.exports = {
             })
             .resizeWindow(1260, 1000)  // x-large-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/x-large-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/x-large-screen.png')
             .resizeWindow(960, 1000)  // large-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/large-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/large-screen.png')
             .resizeWindow(850, 1000)  // medium-large-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/medium-large-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/medium-large-screen.png')
             .resizeWindow(750, 1000)  // medium-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/medium-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/medium-screen.png')
             .resizeWindow(600, 1000)  // small-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/small-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/small-screen.png')
             .resizeWindow(320, 1000)  // x-small-screen
             .pause(this.pauseTimeout)
-            .saveScreenshot('server/images/version/x-small-screen.png')
+            .saveScreenshot('server/images/' + this.version + '/x-small-screen.png')
             .end();
     }
 };
