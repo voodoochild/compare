@@ -49,9 +49,14 @@ main {
 .screenshot {
     width: 80%;
 }
-.screenshot + figcaption {
-    margin-top: 0;
+.screenshot img {
+    width: 100%;
 }
-.workspace {
+.screenshot + .screenshot {
+    border-top: 1px dashed $highlight;
+    padding-top: 1.5em;
+}
+.workspace,
+.placeholder {
     display: none;
 }

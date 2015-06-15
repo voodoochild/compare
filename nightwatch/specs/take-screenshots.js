@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
     waitTimeout: 30000,
     pauseTimeout: 1000,
-    version: 'latest',
+    version: process.env.DUP_VERSION || 'latest',
 
     'Default views': function (browser) {
         browser

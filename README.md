@@ -1,6 +1,8 @@
 # Compare
 
-Run a local server with live reload: `grunt`
+Run the front end: `grunt`
+Run the server: `node server/app.js`
+Create screenshots: `nightwatch`
 
 ## TODO
 - custom grunt task to clean screenshot directory

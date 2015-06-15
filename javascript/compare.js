@@ -49,9 +49,9 @@
         var f = document.createElement('figure');
         var a = document.createElement('a');
         var i = new Image();
+        f.classList.add('screenshot');
         a.href = src;
         a.setAttribute('target', '_blank');
-        i.classList.add('screenshot');
         i.src = src;
         a.appendChild(i);
         f.appendChild(a);
@@ -108,9 +108,11 @@
 
         var aa = imageWorkspace(a.src);
         var bb = imageWorkspace(b.src);
+        var placeholder;
 
         function difference () {
-            var img, diff, canvas, context, screenshot;
+            var img, diff, canvas, context, screenshot, parent;
+
             if (!aa.complete || !bb.complete) {
                 setTimeout(difference, 10);
             } else {
@@ -119,12 +121,16 @@
                 context = canvas.getContext('2d');
                 context.putImageData(diff, 0, 0);
                 screenshot = makeScreenshot(canvas.toDataURL('image/png'));
-                output.appendChild(screenshot);
+                parent = placeholder.parentNode;
+                parent.replaceChild(screenshot, placeholder);
                 document.body.removeChild(aa);
                 document.body.removeChild(bb);
             }
         }
 
+        placeholder = document.createElement('div');
+        placeholder.classList.add('placeholder');
+        output.appendChild(placeholder);
         difference();
     }
 

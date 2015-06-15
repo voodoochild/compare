@@ -31,7 +31,7 @@ function listFiles (directory) {
         .sort(function (a, b) { return a.time - b.time; })
         .reverse()
         .forEach(function (file) {
-            if (file.name === '.DS_Store' || file.name === 'hi.txt') return;
+            if (file.name === '.DS_Store') return;
             if (file.isDirectory) {
                 listFiles(file.path);
             } else {
