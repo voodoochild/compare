@@ -1,11 +1,14 @@
 (function () {
     var VERSIONS_URL = 'http://localhost:3000/versions.json';
 
+    var pages = document.getElementById('pages');
+    var comparison = document.getElementById('comparison');
     var left = document.getElementById('left');
     var right = document.getElementById('right');
     var output = document.getElementById('output');
-    var versions = [];
+    var versions = {};
     var images = {};
+    var currentPage;
 
     function getVersions () {
         return new Promise(function (resolve, reject) {
@@ -15,11 +18,15 @@
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
                         var data = JSON.parse(xmlhttp.responseText);
-                        var commit;
-                        for (var i = 0; i < data.length; i++) {
-                            commit = data[i].commit;
-                            versions.push(commit);
-                            images[commit] = data[i].screenshots;
+                        var page, i, version;
+                        for (page in data) {
+                            if (!versions.hasOwnProperty(page)) versions[page] = [];
+                            if (!images.hasOwnProperty(page)) images[page] = {};
+                            for (i = 0; i < data[page].length; i++) {
+                                version = data[page][i].version;
+                                versions[page].push(version);
+                                images[page][version] = data[page][i].screenshots;
+                            }
                         }
                         resolve();
                      }
@@ -33,16 +40,30 @@
         var leftSelect = left.querySelector('select');
         var rightSelect = right.querySelector('select');
         var option;
-        for (var i = 0; i < versions.length; i++) {
+
+        // Remove any existing versions
+        while (leftSelect.firstChild) {
+            leftSelect.removeChild(leftSelect.firstChild);
+        }
+        while (rightSelect.firstChild) {
+            rightSelect.removeChild(rightSelect.firstChild);
+        }
+
+        // Populate with new versions
+        for (var i = 0; i < versions[currentPage].length; i++) {
             option = document.createElement('option');
-            option.text = versions[i];
+            option.text = versions[currentPage][i];
             leftSelect.appendChild(option);
             option = document.createElement('option');
-            option.text = versions[i];
+            option.text = versions[currentPage][i];
             rightSelect.appendChild(option);
         }
         leftSelect.removeAttribute('disabled');
         rightSelect.removeAttribute('disabled');
+
+        // Auto–select the previous version in the left column
+        var child = left.querySelector('select option:nth-child(2)');
+        if (child) child.selected = 'selected';
     }
 
     function makeScreenshot (src) {
@@ -80,14 +101,14 @@
 
         function createScreenshots () {
             var existing = side.querySelectorAll('figure');
-            var i, select, commit, screenshot;
+            var i, select, version, screenshot;
             for (i = 0; i < existing.length; i++) {
                 side.removeChild(existing[i]);
             }
             select = side.querySelector('select');
-            commit = select.options[select.selectedIndex].value;
-            for (i = 0; i < images[commit].length; i++) {
-                screenshot = makeScreenshot(images[commit][i]);
+            version = select.options[select.selectedIndex].value;
+            for (i = 0; i < images[currentPage][version].length; i++) {
+                screenshot = makeScreenshot(images[currentPage][version][i]);
                 side.appendChild(screenshot);
             }
         }
@@ -148,24 +169,27 @@
     }
 
     function bindEventHandlers () {
-        left.querySelector('select').addEventListener('change', handle.bind(this));
-        right.querySelector('select').addEventListener('change', handle.bind(this));
+        left.querySelector('select').addEventListener('change', loadImages.bind(this));
+        right.querySelector('select').addEventListener('change', loadImages.bind(this));
 
-        function handle () {
-            // updateState();
-            loadImages.call(this);
-        }
+        pages.addEventListener('click', function (event) {
+            if (event.target.tagName === 'LI') {
+                currentPage = event.target.textContent.toLowerCase();
+                var currentActive = pages.querySelector('.active');
+                if (currentActive) currentActive.classList.remove('active');
+                event.target.classList.add('active');
+                comparison.classList.remove('hidden');
+                populateVersions();
+                loadImages();
+            }
+        });
+
+        pages.classList.remove('disabled');
     }
 
     function init () {
         getVersions().then(function () {
-            populateVersions();
             bindEventHandlers();
-
-            var child = left.querySelector('select option:nth-child(2)');
-            if (child) child.selected = 'selected';
-
-            loadImages();
         });
     }
 

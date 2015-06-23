@@ -42,6 +42,9 @@ main {
     display: flex;
     flex-flow: row nowrap;
 }
+.container.hidden {
+    display: none;
+}
 .column {
     margin-top: 0;
     width: 100%;
@@ -56,7 +59,42 @@ main {
     border-top: 1px dashed $highlight;
     padding-top: 1.5em;
 }
-.workspace,
-.placeholder {
+.workspace {
     display: none;
+}
+.placeholder {
+    visibility: hidden;
+}
+#pages {
+    list-style: none;
+    padding: 0;
+}
+#pages li {
+    background-color: $button-main;
+    border-radius: 5px;
+    box-shadow: 0 2px 0 $button-highlight;
+    cursor: default;
+    display: inline-block;
+    margin: 0 0.75em;
+    padding: 0.5em 2em;
+    position: relative;
+
+    &:hover, &:active {
+        top: 1px;
+    }
+    &:active {
+        background-color: $highlight;
+    }
+}
+#pages.disabled li {
+    opacity: 0.5;
+
+    &:hover, &:active {
+        top: 0;
+    }
+}
+#pages li.active {
+    background-color: #f80;
+    box-shadow: 0 2px 0 #ce6b00;
+    color: white;
 }

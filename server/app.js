@@ -7,13 +7,15 @@ var BASE_PATH = 'server/images';
 var screenshots = {};
 
 function storeFile (file) {
-    var parts, version, filename;
+    var parts, page, version, filename;
     file = file.replace(BASE_PATH + path.sep, '');
     parts = file.split(path.sep);
-    version = parts[0];
-    filename = parts[1];
-    if (!screenshots.hasOwnProperty(version)) screenshots[version] = [];
-    screenshots[version].push(filename);
+    page = parts[0];
+    version = parts[1];
+    filename = parts[2];
+    if (!screenshots.hasOwnProperty(page)) screenshots[page] = {};
+    if (!screenshots[page].hasOwnProperty(version)) screenshots[page][version] = [];
+    screenshots[page][version].push(filename);
 }
 
 function listFiles (directory) {
@@ -40,8 +42,8 @@ function listFiles (directory) {
         });
 }
 
-function getFileUrl (version, filename) {
-    return path.join(BASE_PATH, version, filename);
+function getFileUrl (page, version, filename) {
+    return path.join(BASE_PATH, page, version, filename);
 }
 
 app.use(function (req, res, next) {
@@ -51,16 +53,22 @@ app.use(function (req, res, next) {
 });
 
 app.get('/versions.json', function (req, res) {
-    var data = [];
+    var json = {};
+    var page, version, data;
     screenshots = {};
     listFiles(BASE_PATH);
-    for (var version in screenshots) {
-        data.push({
-            commit: version,
-            screenshots: screenshots[version].map(getFileUrl.bind(null, version)).reverse()
-        });
+    console.log(screenshots);
+    for (page in screenshots) {
+        data = [];
+        for (version in screenshots[page]) {
+            data.push({
+                version: version,
+                screenshots: screenshots[page][version].map(getFileUrl.bind(null, page, version)).reverse()
+            });
+        }
+        json[page] = data;
     }
-    res.json(data);
+    res.json(json);
 });
 
 app.listen(3000);
