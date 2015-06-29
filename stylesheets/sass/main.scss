@@ -92,6 +92,9 @@ main {
     &:hover, &:active {
         top: 0;
     }
+    &:active {
+        background-color: $button-main;
+    }
 }
 #pages li.active {
     background-color: #f80;

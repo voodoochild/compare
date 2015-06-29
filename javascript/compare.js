@@ -1,6 +1,4 @@
 (function () {
-    var VERSIONS_URL = 'http://localhost:3000/versions.json';
-
     var pages = document.getElementById('pages');
     var comparison = document.getElementById('comparison');
     var left = document.getElementById('left');
@@ -13,7 +11,7 @@
     function getVersions () {
         return new Promise(function (resolve, reject) {
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.open('GET', VERSIONS_URL, true);
+            xmlhttp.open('GET', window.config.VERSIONS_URL, true);
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4) {
                     if (xmlhttp.status == 200) {
@@ -66,14 +64,16 @@
         if (child) child.selected = 'selected';
     }
 
-    function makeScreenshot (src) {
+    function makeScreenshot (src, diff) {
+        var baseUrl = window.config.IMAGE_BASE_URL || '';
         var f = document.createElement('figure');
         var a = document.createElement('a');
         var i = new Image();
         f.classList.add('screenshot');
-        a.href = src;
+        a.href = baseUrl + src;
         a.setAttribute('target', '_blank');
-        i.src = src;
+        diff = diff === true;
+        i.src = diff ? src : baseUrl + src;
         a.appendChild(i);
         f.appendChild(a);
         return f;
@@ -141,7 +141,7 @@
                 canvas = imagediff.createCanvas(diff.width, diff.height);
                 context = canvas.getContext('2d');
                 context.putImageData(diff, 0, 0);
-                screenshot = makeScreenshot(canvas.toDataURL('image/png'));
+                screenshot = makeScreenshot(canvas.toDataURL('image/png'), true);
                 parent = placeholder.parentNode;
                 parent.replaceChild(screenshot, placeholder);
                 document.body.removeChild(aa);

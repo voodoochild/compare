@@ -43,7 +43,7 @@ function listFiles (directory) {
 }
 
 function getFileUrl (page, version, filename) {
-    return path.join(BASE_PATH, page, version, filename);
+    return path.join(page, version, filename);
 }
 
 app.use(function (req, res, next) {
@@ -57,7 +57,6 @@ app.get('/versions.json', function (req, res) {
     var page, version, data;
     screenshots = {};
     listFiles(BASE_PATH);
-    console.log(screenshots);
     for (page in screenshots) {
         data = [];
         for (version in screenshots[page]) {
